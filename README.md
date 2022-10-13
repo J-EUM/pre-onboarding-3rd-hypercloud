@@ -1,73 +1,92 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 주식회사 하이 - Admin용 데이터 관리 프로그램 만들기
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=NestJS&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>&nbsp;
+## 개요
+원티드 프리온보딩 백엔드 코스 3차 과제 입니다. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+유저들이 서로 친구를 맺고 글을 올릴 수 있는, 커뮤니티 앱을 만들기 위한 API 구현
 
-## Description
+- 개발기간: 2022.10.11 - 2022.10.14 (3일)
+- 개발인원: 안상현, 안수철, 음정민, 이신희 (4명)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
 
-```bash
+## 프로젝트 실행 방법
+
+- 사전에 Git, node, MySQL이 설치되어있어야 합니다.
+
+```shell
+# 레포지토리 클론
+$ git clone https://github.com/J-EUM/pre-onboarding-3rd-hypercloud.git
+
+# 접속
+$ cd pre-onboarding-3rd-hypercloud
+
+# 패키지 설치
 $ npm install
-```
 
-## Running the app
+# 데이터베이스 생성
+mysql> create database 데이터베이스명 character set utf8mb4 collate utf8mb4_general_ci; 
 
-```bash
-# development
-$ npm run start
+# .env파일 만들기
+.env.sample 파일 참고
 
-# watch mode
+# 데이터베이스 테이블 생성
+$ npx dbmate up
+
+# 프로젝트 실행
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+# server start : http://localhost:SERVER_PORT
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## 프로젝트 구조
+### DB모델링
 
-# e2e tests
-$ npm run test:e2e
+(사진)
 
-# test coverage
-$ npm run test:cov
-```
 
-## Support
+## 구현 기능에 대한 소개
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 1. 로그인, 회원가입 (안수철)
+---
+- 선택한 기술들과 구조, 방법론에 대해 문서로 짧게나마 기록하여 공유해주세요.
+ex) “프레임워크가 제공하는 객체지향 개발적 구조를 활용하기 위해 `NestJS` 를 선택”
+- 본인이 작성한 앱의 장점과 단점을 문서화해주세요.
+    
+    ex) “API 내 Authentication에 집중하였기 때문에 유저의 친구 권한에 따른 포스트 답변과 ‘좋아요’ 버튼 클릭이 가능. 다만, 유저가 글을 올릴 때 단순 텍스트 외에 파일 업로드도 구상하였지만, 시간적 제약으로 파일 업로드 기능은 스킵되어 UX상으로 부족함.”
 
-## Stay in touch
+### 2. 팔로우, 언팔로우 (안상현)
+---
+- 선택한 기술들과 구조, 방법론에 대해 문서로 짧게나마 기록하여 공유해주세요.
+ex) “프레임워크가 제공하는 객체지향 개발적 구조를 활용하기 위해 `NestJS` 를 선택”
+- 본인이 작성한 앱의 장점과 단점을 문서화해주세요.
+    
+    ex) “API 내 Authentication에 집중하였기 때문에 유저의 친구 권한에 따른 포스트 답변과 ‘좋아요’ 버튼 클릭이 가능. 다만, 유저가 글을 올릴 때 단순 텍스트 외에 파일 업로드도 구상하였지만, 시간적 제약으로 파일 업로드 기능은 스킵되어 UX상으로 부족함.”
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 3. 포스트 작성, 수정, 삭제 (이신희)
+---
+- 선택한 기술들과 구조, 방법론에 대해 문서로 짧게나마 기록하여 공유해주세요.
+ex) “프레임워크가 제공하는 객체지향 개발적 구조를 활용하기 위해 `NestJS` 를 선택”
+- 본인이 작성한 앱의 장점과 단점을 문서화해주세요.
+    
+    ex) “API 내 Authentication에 집중하였기 때문에 유저의 친구 권한에 따른 포스트 답변과 ‘좋아요’ 버튼 클릭이 가능. 다만, 유저가 글을 올릴 때 단순 텍스트 외에 파일 업로드도 구상하였지만, 시간적 제약으로 파일 업로드 기능은 스킵되어 UX상으로 부족함.”
 
-## License
+### 4. 포스트 좋아요, 댓글 (음정민)
+---
+- 선택한 기술들과 구조, 방법론에 대해 문서로 짧게나마 기록하여 공유해주세요.
+ex) “프레임워크가 제공하는 객체지향 개발적 구조를 활용하기 위해 `NestJS` 를 선택”
+- 본인이 작성한 앱의 장점과 단점을 문서화해주세요.
+    
+    ex) “API 내 Authentication에 집중하였기 때문에 유저의 친구 권한에 따른 포스트 답변과 ‘좋아요’ 버튼 클릭이 가능. 다만, 유저가 글을 올릴 때 단순 텍스트 외에 파일 업로드도 구상하였지만, 시간적 제약으로 파일 업로드 기능은 스킵되어 UX상으로 부족함.”
 
-Nest is [MIT licensed](LICENSE).
+
+
+
+
+## 🏥 API doc
+
