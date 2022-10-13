@@ -1,0 +1,12 @@
+-- migrate:up
+CREATE TABLE users (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+email VARCHAR(255),
+password VARCHAR(255),
+name VARCHAR(30),
+updated_at DATETIME DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
+created_at DATETIME DEFAULT NOW()
+);
+
+-- migrate:down
+DROP TABLE users;
