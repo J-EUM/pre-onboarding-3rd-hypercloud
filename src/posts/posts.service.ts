@@ -6,10 +6,6 @@ import { DataSource } from 'typeorm';
 export class PostService {
     constructor(@InjectDataSource() private readonly connection: DataSource) {}
 
-    async getReaction(): Promise<any> {
-        return this.connection.query('SELECT * FROM reactions;');
-    }
-
     async likePost(userId: number, postId: number): Promise<void> {
 
         const isExist = await this.connection.query(
@@ -33,6 +29,13 @@ export class PostService {
             VALUES (?, ?, 1)
             ;`, [postId, userId]);
     }
-            
+
+    async createComment(userId: number, postId: number, text: string): Promise<void> {
+        return await this.connection.query(
+            `INSERT INTO comments
+            (post_id, user_id, text)
+            VALUES (?, ?, ?)
+            ;`, [postId, userId, text]);
+    }
 }
 
