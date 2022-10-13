@@ -7,6 +7,7 @@ import {
   NotAcceptableException,
   HttpCode,
   ForbiddenException,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import * as bcrypt from 'bcryptjs';
@@ -83,5 +84,31 @@ export class UsersController {
     } else {
       throw new NotAcceptableException();
     }
+  }
+
+  @Post('/follow')
+  @HttpCode(200)
+  async follow(
+    @Headers('token') token: string,
+    @Body('email') email: string
+  ): Promise <any> {
+    const payload = jwt.verify(token, process.env.SECRET_KEY); 
+    const follower = payload['id'];
+    const following = email
+    
+    await this.usersService.createFollow(follower, following)
+  }
+
+  @Delete('/unfollow')
+  @HttpCode(200)
+  async unfollow(
+    @Headers('token') token: string,
+    @Body('email') email: string
+  ): Promise <any> {
+    const payload = jwt.verify(token, process.env.SECRET_KEY); 
+    const follower = payload['id'];
+    const following = email
+    
+    await this.usersService.deleteFollow(follower, following)
   }
 }
