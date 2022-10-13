@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE comments (
-id INT PRIMARY KEY,
+id INT PRIMARY KEY AUTO_INCREMENT,
 post_id INT NOT NULL,
 user_id INT NOT NULL,
 text VARCHAR(1000) NOT NULL,
