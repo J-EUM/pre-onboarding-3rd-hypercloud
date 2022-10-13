@@ -6,7 +6,7 @@ import { DataSource } from 'typeorm';
 export class PostService {
     constructor(@InjectDataSource() private readonly connection: DataSource) {}
 
-    async likePost(userId: number, postId: number): Promise<any> {
+    async likePost(userId: string, postId: number): Promise<any> {
 
         const post: [] = await this.connection.query(
             `SELECT * FROM posts 

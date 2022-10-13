@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Res } from "@nestjs/common";
+import { Headers, Body, Controller, Get, Param, ParseIntPipe, Post, Res, NotAcceptableException } from "@nestjs/common";
 import { PostService } from "./posts.service";
+import * as jwt from 'jsonwebtoken';
 
 @Controller('posts')
 export class PostsController {
@@ -7,8 +8,13 @@ export class PostsController {
 
     @Post('/:id/like')
     async likePost(
-        @Body('userId') userId: number,
+        @Headers('token') token: string,
         @Param('id', ParseIntPipe) postId: number): Promise<any> {
+        const payload = jwt.verify(token, process.env.SECRET_KEY);
+        const userId = payload["id"];
+        if (!userId) {
+            throw new NotAcceptableException();
+        }
         await this.postService.likePost(userId, postId);
 
         return Object.assign({message: "SUCCESS"})
@@ -16,10 +22,16 @@ export class PostsController {
 
     @Post('/:id/comment')
     async createComment(
-        @Body('userId') userId: number,
+        @Headers('token') token: string,
         @Param('id', ParseIntPipe) postId: number,
         @Body('text') text: string
     ): Promise<any> {
+
+        const payload = jwt.verify(token, process.env.SECRET_KEY);
+        const userId = payload["id"];
+        if (!userId) {
+            throw new NotAcceptableException();
+        }
         await this.postService.createComment(userId, postId, text)
 
         return Object.assign({message: "SUCCESS"})
