@@ -9,7 +9,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { UserService } from './users.service';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
 @Controller('users')
@@ -25,7 +25,8 @@ export class UsersController {
   ): Promise<void> {
     const salt = await bcrypt.genSalt(11);
     const hashedPassword = bcrypt.hashSync(password, salt);
-    return await this.usersService.signup(name, email, hashedPassword);
+    await this.usersService.signup(name, email, hashedPassword);
+    return Object.assign({ message: 'Create User' });
   }
 
   @Post('/login')
@@ -46,7 +47,7 @@ export class UsersController {
           },
         );
         const userDto = { id: existUser[0].id, token: token };
-        return userDto;
+        return Object.assign({ message: 'Create User' }, userDto);
       } else {
         throw new NotAcceptableException();
       }
@@ -61,7 +62,7 @@ export class UsersController {
     @Headers('token') token: string,
     @Body('email') email: string,
     @Body('password') password: string,
-  ): Promise<void> {
+  ): Promise<object> {
     const userId = jwt.verify(token, process.env.SECRET_KEY);
     if (!userId) {
       throw new NotAcceptableException();
@@ -78,6 +79,7 @@ export class UsersController {
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       await this.usersService.changePassword(userId['id'], hashedPassword);
+      return Object.assign({ message: 'Change Password Success' });
     } else {
       throw new NotAcceptableException();
     }
