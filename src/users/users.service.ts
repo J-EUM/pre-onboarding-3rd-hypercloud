@@ -56,8 +56,8 @@ export class UserService {
     }
 
     const followingUserExist = await this.connection.query(`
-    SELECT following_user_id FROM follow
-    WHERE following_user_id = ?;
+    SELECT followed_user_id FROM follow
+    WHERE followed_user_id = ?;
     `, [followingUser['id']])
 
     if (followingUserExist.length) {
@@ -66,7 +66,7 @@ export class UserService {
 
     return await this.connection.query(`
     INSERT INTO follow
-    (follower_user_id, following_user_id)
+    (following_user_id, followed_user_id)
     VALUES(?,?);`,
     [follower,followingUser['id']])
   }
@@ -83,8 +83,8 @@ export class UserService {
     }
 
     const followingUserExist = await this.connection.query(`
-    SELECT following_user_id FROM follow
-    WHERE following_user_id = ?;
+    SELECT followed_user_id FROM follow
+    WHERE followed_user_id = ?;
     `, [followingUser['id']])
 
     console.log('fue',followingUserExist)
@@ -95,7 +95,7 @@ export class UserService {
 
     return await this.connection.query(`
     DELETE FROM follow
-    WHERE follower_user_id = ${follower} AND following_user_id = ${followingUser['id']}
+    WHERE following_user_id = ${follower} AND followed_user_id = ${followingUser['id']}
     ;`)
   }
 }
