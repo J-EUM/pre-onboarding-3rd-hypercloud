@@ -1,4 +1,4 @@
-# 주식회사 하이 - Admin용 데이터 관리 프로그램 만들기
+# 하이퍼클라우드 - 커뮤니티 어플리케이션 만들기
 
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/>&nbsp;
@@ -47,7 +47,7 @@ $ npm run start:dev
 ## 프로젝트 구조
 ### DB모델링
 
-(사진)
+![image](https://user-images.githubusercontent.com/97498663/195664849-15b9a4b4-d475-490b-b6d6-4190748731bd.png)
 
 
 ## 구현 기능에 대한 소개
@@ -88,5 +88,5 @@ ex) “프레임워크가 제공하는 객체지향 개발적 구조를 활용�
 
 
 
-## 🏥 API doc
+## API doc
 
