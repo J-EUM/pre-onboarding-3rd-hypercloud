@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
+import { AlreadyHasActiveConnectionError, DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -43,5 +43,60 @@ export class UserService {
       `,
       [hashedPassword, userId],
     );
+  }
+
+  async createFollow(follower: number, following: string) {
+    const [followingUser] = await this.connection.query(`
+    SELECT id FROM users
+    WHERE email = ?;`
+    ,[following]
+    )
+
+    if (!followingUser) {
+      throw new NotFoundException(`${following} does not exist`)
+    }
+
+    const followingUserExist = await this.connection.query(`
+    SELECT following_user_id FROM follow
+    WHERE following_user_id = ?;
+    `, [followingUser['id']])
+
+    if (followingUserExist.length) {
+      throw new ConflictException(`Already follow user: ${following}`)
+    }
+
+    return await this.connection.query(`
+    INSERT INTO follow
+    (follower_user_id, following_user_id)
+    VALUES(?,?);`,
+    [follower,followingUser['id']])
+  }
+
+  async deleteFollow(follower: number, following: string) {
+    const [followingUser] = await this.connection.query(`
+    SELECT id FROM users
+    WHERE email = ?;`
+    ,[following]
+    )
+
+    if (!followingUser) {
+      throw new NotFoundException(`${following} does not exist`)
+    }
+
+    const followingUserExist = await this.connection.query(`
+    SELECT following_user_id FROM follow
+    WHERE following_user_id = ?;
+    `, [followingUser['id']])
+
+    console.log('fue',followingUserExist)
+
+    if (!followingUserExist.length) {
+      throw new ConflictException(`you are not following: ${following}`)
+    }
+
+    return await this.connection.query(`
+    DELETE FROM follow
+    WHERE follower_user_id = ${follower} AND following_user_id = ${followingUser['id']}
+    ;`)
   }
 }
